@@ -1,0 +1,71 @@
+create database cursonli;
+use cursonli;
+
+
+
+
+create table tblCoordinador(
+idCoordinador int auto_increment primary key,
+nombre varchar (50),
+direccion varchar (70),
+telefono varchar (8),
+correo varchar (15)
+
+);
+
+create table tblCreadorContenido (
+idCreadorContenido int auto_increment primary key,
+nombre varchar(50),
+direccion varchar (70),
+correo varchar(15),
+telefono varchar (9)
+);
+
+create table tblDocente(
+idDocente int auto_increment primary key,
+nombre varchar (50), 
+direccion varchar (70),
+telefono varchar (9),
+correo varchar (15)
+);
+
+create table tblCliente (
+idCliente int auto_increment primary key, 
+nombre varchar (50),
+direccion varchar (70)
+);
+
+create table tblCurso(
+idCurso  int auto_increment primary key,
+nombre varchar(50), 
+fechaIni varchar(10),
+fechaFin varchar (10), 
+idCreadorContenido varchar (50), 
+constraint fk_conte foreign key (idCreadorContenido) references tblCreadorContenido( idCreadorContenido) on delete cascade
+);
+
+create table tblMatricula (
+idMatricula int auto_increment primary key,
+idCurso int, 
+idCliente int , 
+constraint fk_cur foreign key (idCurso) references tblCurso (idCurso), 
+constraint fk_cli foreign key (idCliente) references tblCliente (idCliente)
+); 
+
+create table tblGrupo(
+idGrupo int  auto_increment primary key,
+idDocente int,constraint fk_doc foreign key (idDocente) references tblDocente (idDocente), 
+idCliente int,constraint fk_clie foreign key (idCliente) references tblCliente (idCliente)
+
+);
+
+create table tblModulos(
+idModulo  int auto_increment primary key,
+nombre varchar (50),
+idCurso int , 
+idDocente int , idCoordinador int ,
+constraint fk_doce foreign key (idDocente) references tblDocente(idDocente),
+ 
+constraint fk_cu foreign key (idCurso) references tblCurso (idCurso),
+constraint fk_coor foreign key (idCoordinador) references tblCoordinador (idCoordinador)
+);
